@@ -39,6 +39,7 @@ public class Case04 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
+
 		goTo("http://localhost:8080/lms/");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		getEvidence(new Object() {
@@ -49,6 +50,7 @@ public class Case04 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
+		// 初回ログイン済みのユーザー情報を入力してログインボタンを押下
 		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA01");
 		webDriver.findElement(By.id("password")).sendKeys("StudentAA01");
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
@@ -62,6 +64,7 @@ public class Case04 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
+		// 機能メニューを開いてヘルプリンクを押下
 		webDriver.findElement(By.linkText("機能")).click();
 		webDriver.findElement(By.linkText("ヘルプ")).click();
 
@@ -74,12 +77,16 @@ public class Case04 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
+		// リンク押下前に開かれているタブ
 		Set<String> oldWindowHandles = webDriver.getWindowHandles();
+		// よくある質問リンクを押下
 		webDriver.findElement(By.linkText("よくある質問")).click();
 
+		// リンク押下後に開かれているタブ
 		Set<String> newWindowHandles = webDriver.getWindowHandles();
-		assertEquals(oldWindowHandles.size() + 1, newWindowHandles.size());
 
+		// タブが新しく開かれているかを確認し、新しく開かれたタブに遷移
+		assertEquals(oldWindowHandles.size() + 1, newWindowHandles.size());
 		newWindowHandles.removeAll(oldWindowHandles);
 		for (String windowHandle : newWindowHandles) {
 			webDriver.switchTo().window(windowHandle);

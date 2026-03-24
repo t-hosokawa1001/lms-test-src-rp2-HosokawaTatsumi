@@ -37,6 +37,7 @@ public class Case02 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
+
 		goTo("http://localhost:8080/lms/");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		getEvidence(new Object() {
@@ -47,6 +48,7 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
+		// 存在しないユーザー情報を入力してログインボタンを押下
 		webDriver.findElement(By.id("loginId")).sendKeys("ItTest00");
 		webDriver.findElement(By.id("password")).sendKeys("password00");
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
